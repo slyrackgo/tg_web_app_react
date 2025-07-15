@@ -1,4 +1,3 @@
-// src/hooks/useTelegram.js
 const tg = window.Telegram.WebApp;
 
 export function useTelegram() {
@@ -11,9 +10,8 @@ export function useTelegram() {
     };
 
     return {
-        onClose,
-        onToggleButton,
         tg,
+        onToggleButton,
         user: tg.initDataUnsafe?.user,
     };
 }
