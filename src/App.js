@@ -4,6 +4,7 @@ import { useTelegram } from "./hooks/useTelegram";
 import {Route, Routes} from 'react-router-dom' 
 import ProductList from './components/ProductList/ProductList';
 import Form from './components/Form/Form';  
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
     const { onToggleButton, tg, user } = useTelegram();
