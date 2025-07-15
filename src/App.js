@@ -13,8 +13,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Telegram Web App</h1>
-      <button onClick={onClose}>Закрыть</button>
+      <Header/>
+      <button onClick={ontoggleButton}>toggle</button>
     </div>
   );
 }
