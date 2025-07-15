@@ -1,13 +1,12 @@
 import './App.css';
 import { useEffect } from "react";
 import { useTelegram } from "./hooks/useTelegram";
-import {Route, Routes} from 'react-router-dom' 
 import ProductList from './components/ProductList/ProductList';
-import Form from './components/Form/Form';  
-import { BrowserRouter as Router } from 'react-router-dom';
+import Form from './components/Form/Form';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
-    const { onToggleButton, tg, user } = useTelegram();
+    const { tg, user } = useTelegram();
 
     useEffect(() => {
         tg.ready();
@@ -19,9 +18,18 @@ function App() {
 
     return (
         <div className="App">
+            {/* Telegram user info */}
+            <div className="header">
+                <span>Привет, @{user?.username || 'гость'}!</span>
+                <button onClick={onClose} className="close-btn">Закрыть</button>
+            </div>
+
+            {/* Routes */}
             <Router>
-              <Route index element={<ProductList/>}/>
-              <Route path={'form'} element={<Form/>}/>
+                <Routes>
+                    <Route path="/" element={<ProductList />} />
+                    <Route path="/form" element={<Form />} />
+                </Routes>
             </Router>
         </div>
     );

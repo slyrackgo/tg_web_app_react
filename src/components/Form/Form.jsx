@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './Form.css';
-import { useTelegram } from '../../hooks/useTelegram';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useTelegram } from "../../hooks/useTelegram";
 
 const Form = () => {
     const [city, setCity] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
     const [phone, setPhone] = useState('');
     const { tg } = useTelegram();
+
+    const onChangeCity = (e) => setCity(e.target.value);
+    const onChangeStreet = (e) => setStreet(e.target.value);
+    const onChangePhone = (e) => setPhone(e.target.value);
 
     useEffect(() => {
         tg.MainButton.setParams({
@@ -16,36 +19,36 @@ const Form = () => {
     }, [tg]);
 
     useEffect(() => {
-        if (!city || !address || !phone) {
+        if (!city || !street || !phone) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
-    }, [city, address, phone, tg]);
+    }, [city, street, phone, tg]);
 
     return (
         <div>
             <h3>Введите ваши данные</h3>
             <input
-                className="input"
+                className='input'
                 type="text"
-                placeholder="Город"
+                placeholder='Город'
                 value={city}
-                onChange={e => setCity(e.target.value)}
+                onChange={onChangeCity}
             />
             <input
-                className="input"
+                className='input'
                 type="text"
-                placeholder="Адрес"
-                value={address}
-                onChange={e => setAddress(e.target.value)}
+                placeholder='Адрес'
+                value={street}
+                onChange={onChangeStreet}
             />
             <input
-                className="input"
+                className='input'
                 type="tel"
-                placeholder="Номер телефона"
+                placeholder='Номер телефона'
                 value={phone}
-                onChange={e => setPhone(e.target.value)}
+                onChange={onChangePhone}
             />
         </div>
     );
