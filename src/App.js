@@ -1,9 +1,9 @@
 import './App.css';
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useTelegram } from './hooks/useTelegram';
-import Form from './components/Form/Form';
+import { useEffect } from "react";
+import { useTelegram } from "./hooks/useTelegram";
 import ProductList from './components/ProductList/ProductList';
+import Form from './components/Form/Form';  
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
     const { tg } = useTelegram();

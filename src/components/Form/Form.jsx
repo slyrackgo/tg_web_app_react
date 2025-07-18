@@ -6,9 +6,11 @@ const Form = () => {
     const [city, setCity] = useState('');
     const [street, setStreet] = useState('');
     const [phone, setPhone] = useState('');
-    const [entity, setEntity] = useState('individual'); // ✅ THIS WAS MISSING
-
     const { tg } = useTelegram();
+
+    const onChangeCity = (e) => setCity(e.target.value);
+    const onChangeStreet = (e) => setStreet(e.target.value);
+    const onChangePhone = (e) => setPhone(e.target.value);
 
     useEffect(() => {
         tg.MainButton.setParams({
@@ -25,37 +27,29 @@ const Form = () => {
     }, [city, street, phone, tg]);
 
     return (
-        <div className="form">
+        <div>
             <h3>Введите ваши данные</h3>
             <input
                 className='input'
                 type="text"
                 placeholder='Город'
                 value={city}
-                onChange={e => setCity(e.target.value)}
+                onChange={onChangeCity}
             />
             <input
                 className='input'
                 type="text"
                 placeholder='Адрес'
                 value={street}
-                onChange={e => setStreet(e.target.value)}
+                onChange={onChangeStreet}
             />
             <input
                 className='input'
                 type="tel"
                 placeholder='Номер телефона'
                 value={phone}
-                onChange={e => setPhone(e.target.value)}
+                onChange={onChangePhone}
             />
-            <select
-                className="input"
-                value={entity}
-                onChange={e => setEntity(e.target.value)}
-            >
-                <option value="individual">Физ. лицо</option>
-                <option value="business">Юр. лицо</option>
-            </select>
         </div>
     );
 };
