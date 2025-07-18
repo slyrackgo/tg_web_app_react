@@ -9,10 +9,7 @@ const Form = () => {
     const [phone, setPhone] = useState('');
     const { tg } = useTelegram();
 
-    const onChangeCity = (e) => setCity(e.target.value);
-    const onChangeStreet = (e) => setStreet(e.target.value);
-    const onChangePhone = (e) => setPhone(e.target.value);
-
+  
 useEffect(() => {
     const mainButton = tg.MainButton;
     mainButton.setParams({ 
@@ -29,8 +26,13 @@ useEffect(() => {
     }
 }, [city, street, phone, tg.MainButton]); 
 
+  const onChangeCity = (e) => setCity(e.target.value);
+    const onChangeStreet = (e) => setStreet(e.target.value);
+    const onChangePhone = (e) => setPhone(e.target.value);
+
+
     return (
-        <div className={'form'}>
+        <div className={"form"}>
             <h3>Введите ваши данные</h3>
             <input
                 className='input'
