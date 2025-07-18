@@ -1,56 +1,71 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Form.css';
 import {useTelegram} from "../../hooks/useTelegram";
 
-
 const Form = () => {
-    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
-    const [phone, setPhone] = useState('');
-    const { tg } = useTelegram();
 
-    const onChangeCity = (e) => zsetCity(e.target.value);
-    const onChangeStreet = (e) => setStreet(e.target.value);
-    const onChangePhone = (e) => setPhone(e.target.value);
+    const {tg} = useTelegram();
+
+    const onSendData = useCallback(() => {
+        const data = {
+            country,
+            street
+  
+        }
+        tg.sendData(JSON.stringify(data));
+    }, [country, street])
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
 
     useEffect(() => {
         tg.MainButton.setParams({
             text: 'Отправить данные'
-        });
-    }, [tg]);
+        })
+    }, [])
 
     useEffect(() => {
-        if (!city || !street || !phone) {
+        if(!street || !country) {
             tg.MainButton.hide();
         } else {
             tg.MainButton.show();
         }
-    }, [city, street, phone, tg]);
+    }, [country, street])
+
+    const onChangeCountry = (e) => {
+        setCountry(e.target.value)
+    }
+
+    const onChangeStreet = (e) => {
+        setStreet(e.target.value)
+    }
+
+ 
 
     return (
-        <div>
+        <div className={"form"}>
             <h3>Введите ваши данные</h3>
             <input
-                className='input'
+                className={'input'}
                 type="text"
-                placeholder='Город'
-                value={city}
-                onChange={onChangeCity}
+                placeholder={'Страна'}
+                value={country}
+                onChange={onChangeCountry}
             />
             <input
-                className='input'
+                className={'input'}
                 type="text"
-                placeholder='Адрес'
+                placeholder={'Улица'}
                 value={street}
                 onChange={onChangeStreet}
             />
-            <input
-                className='input'
-                type="tel"
-                placeholder='Номер телефона'
-                value={phone}
-                onChange={onChangePhone}
-            />
+          
         </div>
     );
 };
