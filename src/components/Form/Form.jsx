@@ -6,6 +6,8 @@ const Form = () => {
     const [city, setCity] = useState('');
     const [street, setStreet] = useState('');
     const [phone, setPhone] = useState('');
+    const [entity, setEntity] = useState('individual'); // ✅ THIS WAS MISSING
+
     const { tg } = useTelegram();
 
     useEffect(() => {
@@ -51,7 +53,8 @@ const Form = () => {
                 value={entity}
                 onChange={e => setEntity(e.target.value)}
             >
-                
+                <option value="individual">Физ. лицо</option>
+                <option value="business">Юр. лицо</option>
             </select>
         </div>
     );
