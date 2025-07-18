@@ -13,10 +13,11 @@ const Form = () => {
         const data = {
             city, 
             street,
-            phone
+            phone,
+            tg
         }
         tg.sendData(JSON.stringify(data))
-    }, [city, street, phone]);
+    }, [city, street, phone, tg]);
 
     useEffect(() =>{
         tg.onEvent('mainButtonClicked', onSendData)
