@@ -30,7 +30,7 @@ const Form = () => {
         mainButton.setParams({ 
             text: 'Отправить данные' 
         });
-    }, [tg.MainButton]); 
+    }, [tg]); 
 
  useEffect(() => {
     const mainButton = tg.MainButton;
