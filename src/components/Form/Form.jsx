@@ -9,15 +9,21 @@ const Form = () => {
     const [phone, setPhone] = useState('');
     const { tg } = useTelegram();
 
-    const onChangeCity = (e) => {setCity(e.target.value)};
-    const onChangeStreet = (e) => {setStreet(e.target.value)};
-    const onChangePhone = (e) => {setPhone(e.target.value)};
+    const onChangeCity = (e) => {
+        setCity(e.target.value)
+    };
+    const onChangeStreet = (e) => {
+        setStreet(e.target.value);
+    };
+    const onChangePhone = (e) => {
+        setPhone(e.target.value)
+    };
 
     useEffect(() => {
         tg.MainButton.setParams({
             text: 'Отправить данные'
         });
-    }, [tg]);
+    }, []);
 
     useEffect(() => {
         if (!city || !street || !phone) {
@@ -25,7 +31,7 @@ const Form = () => {
         } else {
             tg.MainButton.show();
         }
-    }, [city, street, phone, tg]);
+    }, [city, street, phone]);
 
     return (
         <div>
