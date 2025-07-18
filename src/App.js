@@ -10,9 +10,9 @@ import Form from "./components/Form/Form";
 function App() {
     const { tg } = useTelegram(); 
 
-    useEffect(() => {
+  useEffect(() => {
         tg.ready();
-    }, [tg]);
+    }, [])
     return (
         <div className="App">
             <Header />
