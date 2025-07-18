@@ -13,7 +13,7 @@ function App() {
         tg.ready();
     }, [tg]);
     return (
-        <div className="App">zz
+        <div className="App">
             <Header />
             <Routes>
                 <Route index element={<ProductList />} />
