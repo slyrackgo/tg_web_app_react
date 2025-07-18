@@ -19,11 +19,10 @@ const getTotalPrice = (items = []) => {
 
 
 const ProductList = () => {
-
     const [addedItems, setAddedItems] = useState([]);
     const {tg, queryId} = useTelegram();
 
-   const onSendData = useCallback(() => {
+    const onSendData = useCallback(() => {
         const data = {
             products: addedItems,
             totalPrice: getTotalPrice(addedItems),
@@ -37,8 +36,15 @@ const ProductList = () => {
             body: JSON.stringify(data)
         })
     }, [addedItems])
-    
-    const onAdd = (product) =>{
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
+
+    const onAdd = (product) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
 
@@ -59,13 +65,14 @@ const ProductList = () => {
             })
         }
     }
+
     return (
-        <div className={"list"}>
-            {products.map(item =>(
+        <div className={'list'}>
+            {products.map(item => (
                 <ProductItem
-                product={item}
-                onAdd={onAdd}
-                className={"item"}
+                    product={item}
+                    onAdd={onAdd}
+                    className={'item'}
                 />
             ))}
         </div>
