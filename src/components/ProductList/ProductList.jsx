@@ -3,9 +3,6 @@ import './ProductList.css';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
 
-const onAddHandler = () =>{
-    ondAdd(product);
-}
 const products = [
     {id: '1', title: 'Брюки', price: 3600, description: 'Шикарные брюки в итальянском стиле'},
     {id: '2', title: 'Батники', price: 2000, description: 'Классический аккуратный батник идущий в стиле old money, его стильный воротник добавляет образу серьезности и элегантности.'},
