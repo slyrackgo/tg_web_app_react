@@ -13,19 +13,19 @@ const Form = () => {
     const onChangeStreet = (e) => setStreet(e.target.value);
     const onChangePhone = (e) => setPhone(e.target.value);
 
-    useEffect(() => {
-        tg.MainButton.setParams({
-            text: 'Отправить данные'
-        });
-    }, [tg]);
+useEffect(() => {
+    const mainButton = tg.MainButton;
+    mainButton.setParams({ text: 'Отправить данные' });
+}, [tg.MainButton]); 
 
-    useEffect(() => {
-        if (!city || !street || !phone) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-        }
-    }, [city, street, phone, tg]);
+ useEffect(() => {
+    const mainButton = tg.MainButton;
+    if (!city || !street || !phone) {
+        mainButton.hide();
+    } else {
+        mainButton.show();
+    }
+}, [city, street, phone, tg.MainButton]); 
 
     return (
         <div>
