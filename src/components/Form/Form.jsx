@@ -1,59 +1,61 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useTelegram } from '../../hooks/useTelegram';
+import React, {useEffect, useState} from 'react';
 import './Form.css';
+import {useTelegram} from "../../hooks/useTelegram";
+
 
 const Form = () => {
     const [city, setCity] = useState('');
-    const [address, setAddress] = useState('');
+    const [street, setStreet] = useState('');
     const [phone, setPhone] = useState('');
-    
     const { tg } = useTelegram();
-    const MainButton = tg.MainButton;
 
-    const onSendData = useCallback(() => {
-        const data = {
-            city,
-            address,
-            phone,
-        };
-        tg.sendData(JSON.stringify(data));
-    }, [city, address, phone, tg]);
+    const onChangeCity = (e) => {
+        setCity(e.target.value)
+    };
+    const onChangeStreet = (e) => {
+        setStreet(e.target.value);
+    };
+    const onChangePhone = (e) => {
+        setPhone(e.target.value)
+    };
 
     useEffect(() => {
-        MainButton.setParams({
+        tg.MainButton.setParams({
             text: 'Отправить данные'
         });
-    }, [MainButton]);
+    }, []);
 
     useEffect(() => {
-        MainButton.onClick(onSendData);
-        MainButton.show();
-        return () => MainButton.offClick(onSendData);
-    }, [MainButton, onSendData]);
+        if (!city || !street || !phone) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+        }
+    }, [city, street, phone]);
 
     return (
-        <div className="form">
+        <div>
             <h3>Введите ваши данные</h3>
             <input
-                className="input"
+                className='input'
                 type="text"
-                placeholder="Город"
+                placeholder='Город'
                 value={city}
-                onChange={e => setCity(e.target.value)}
+                onChange={onChangeCity}
             />
             <input
-                className="input"
+                className='input'
                 type="text"
-                placeholder="Адрес"
-                value={address}
-                onChange={e => setAddress(e.target.value)}
+                placeholder='Адрес'
+                value={street}
+                onChange={onChangeStreet}
             />
             <input
-                className="input"
+                className='input'
                 type="tel"
-                placeholder="Номер телефона"
+                placeholder='Номер телефона'
                 value={phone}
-                onChange={e => setPhone(e.target.value)}
+                onChange={onChangePhone}
             />
         </div>
     );
