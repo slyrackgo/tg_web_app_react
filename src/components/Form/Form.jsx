@@ -1,73 +1,58 @@
-import React, {useCallback, useEffect, useState} from 'react';
+// src/components/Form/Form.jsx
+import React, { useState, useCallback, useEffect } from 'react';
+import { useTelegram } from '../../hooks/useTelegram';
 import './Form.css';
-import {useTelegram} from "../../hooks/useTelegram";
 
 const Form = () => {
-    const [country, setCountry] = useState('');
-    const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const { tg } = useTelegram();
+  const MainButton = tg.MainButton;
 
-    const {tg} = useTelegram();
+  const onSendData = useCallback(() => {
+    const data = { city, address, phone };
+    tg.sendData(JSON.stringify(data));
+  }, [city, address, phone, tg]);
 
-    const onSendData = useCallback(() => {
-        const data = {
-            country,
-            street
-  
-        }
-        tg.sendData(JSON.stringify(data));
-    }, [country, street])
+  useEffect(() => {
+    MainButton.setParams({ text: 'Отправить данные' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', onSendData)
-        return () => {
-            tg.offEvent('mainButtonClicked', onSendData)
-        }
-    }, [onSendData])
+  useEffect(() => {
+    MainButton.onClick(onSendData);
+    MainButton.show();
+    return () => MainButton.offClick(onSendData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    useEffect(() => {
-        tg.MainButton.setParams({
-            text: 'Отправить данные'
-        })
-    }, [])
-
-    useEffect(() => {
-        if(!street || !country) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-        }
-    }, [country, street])
-
-    const onChangeCountry = (e) => {
-        setCountry(e.target.value)
-    }
-
-    const onChangeStreet = (e) => {
-        setStreet(e.target.value)
-    }
-
- 
-
-    return (
-        <div className={"form"}>
-            <h3>Введите ваши данные</h3>
-            <input
-                className={'input'}
-                type="text"
-                placeholder={'Страна'}
-                value={country}
-                onChange={onChangeCountry}
-            />
-            <input
-                className={'input'}
-                type="text"
-                placeholder={'Улица'}
-                value={street}
-                onChange={onChangeStreet}
-            />
-          
-        </div>
-    );
+  return (
+    <div className="form">
+      <h3>Введите ваши данные</h3>
+      <input
+        className="input"
+        type="text"
+        placeholder="Город"
+        value={city}
+        onChange={e => setCity(e.target.value)}
+      />
+      <input
+        className="input"
+        type="text"
+        placeholder="Адрес"
+        value={address}
+        onChange={e => setAddress(e.target.value)}
+      />
+      <input
+        className="input"
+        type="tel"
+        placeholder="Номер телефона"
+        value={phone}
+        onChange={e => setPhone(e.target.value)}
+      />
+    </div>
+  );
 };
 
 export default Form;
