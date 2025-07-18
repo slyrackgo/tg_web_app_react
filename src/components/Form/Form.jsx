@@ -23,7 +23,7 @@ const Form = () => {
         return() => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
-    }, [onSendData])
+    }, [onSendData, tg])
     
     useEffect(() => {
         const mainButton = tg.MainButton;
@@ -39,7 +39,7 @@ const Form = () => {
     } else {
         mainButton.show();
     }
-}, [city, street, phone, tg.MainButton]); 
+}, [city, street, phone, tg]); 
 
   const onChangeCity = (e) => setCity(e.target.value);
     const onChangeStreet = (e) => setStreet(e.target.value);
