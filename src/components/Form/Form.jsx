@@ -35,23 +35,23 @@ useEffect(() => {
         <div className={"form"}>
             <h3>Введите ваши данные</h3>
             <input
-                className='input'
+                className="input"
                 type="text"
-                placeholder='Город'
+                placeholder="Город"
                 value={city}
                 onChange={onChangeCity}
             />
             <input
-                className='input'
+                className="input"
                 type="text"
-                placeholder='Адрес'
+                placeholder="Адрес"
                 value={street}
                 onChange={onChangeStreet}
             />
             <input
-                className='input'
+                className="input"
                 type="tel"
-                placeholder='Номер телефона'
+                placeholder="Номер телефона"
                 value={phone}
                 onChange={onChangePhone}
             />
