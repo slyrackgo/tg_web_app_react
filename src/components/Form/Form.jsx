@@ -16,21 +16,21 @@ const Form = () => {
             phone,
         }
         tg.sendData(JSON.stringify(data))
-    }, [city, street, phone]);
+    }, [city, street, phone, tg]);
 
-    useEffect(() =>{
+    useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData)
-        return() =>{
+        return() => {
             tg.offEvent('mainButtonClicked', onSendData)
         }
     }, [onSendData])
     
-useEffect(() => {
-    const mainButton = tg.MainButton;
-    mainButton.setParams({ 
-        text: 'Отправить данные' 
-    });
-}, [tg.MainButton]); 
+    useEffect(() => {
+        const mainButton = tg.MainButton;
+        mainButton.setParams({ 
+            text: 'Отправить данные' 
+        });
+    }, [tg.MainButton]); 
 
  useEffect(() => {
     const mainButton = tg.MainButton;
