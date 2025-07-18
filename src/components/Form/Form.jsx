@@ -20,18 +20,17 @@ const Form = () => {
     };
 
     useEffect(() => {
-        tg.MainButton.setParams({
-            text: 'Отправить данные'
-        });
-    }, []);
+    MainButton.setParams({
+        text: 'Отправить данные'
+    });
+}, [MainButton]);
 
-    useEffect(() => {
-        if (!city || !street || !phone) {
-            tg.MainButton.hide();
-        } else {
-            tg.MainButton.show();
-        }
-    }, [city, street, phone]);
+useEffect(() => {
+    MainButton.onClick(onSendData);
+    MainButton.show();
+    return () => MainButton.offClick(onSendData);
+}, [MainButton, onSendData]);
+
 
     return (
         <div>
