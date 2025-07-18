@@ -1,7 +1,7 @@
-// src/components/Form/Form.jsx
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Form.css';
-import { useTelegram } from "../../hooks/useTelegram";
+import {useTelegram} from "../../hooks/useTelegram";
+
 
 const Form = () => {
     const [city, setCity] = useState('');
