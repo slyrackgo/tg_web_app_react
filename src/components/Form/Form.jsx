@@ -10,7 +10,7 @@ const Form = () => {
 
   useEffect(() => {
     tg.MainButton.setParams({ text: 'Отправить данные' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, []);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const Form = () => {
     } else {
       tg.MainButton.show();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city, street, phone]);
 
   return (
