@@ -11,10 +11,11 @@ const products = [
 ]
 
 const getTotalPrice = (items = []) => {
-    return items.reducte((acc, item) =>{
-        return acc = item.price
+    return items.reduce((acc, item) => {
+        return acc += item.price
     }, 0)
 }
+
 
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
