@@ -1,27 +1,26 @@
-
 import './App.css';
-import {useEffect} from "react";
-import {useTelegram} from "./hooks/useTelegram";
+import React, { useEffect } from 'react';
+import { useTelegram } from "./hooks/useTelegram";
+import { Route, Routes } from 'react-router-dom';
+
 import Header from "./components/Header/Header";
-import {Route, Routes} from 'react-router-dom'
 import ProductList from "./components/ProductList/ProductList";
-import Form from "./components/Form/Form";
+import MainPage from "./components/MainPage/MainPage"; // 👈 Add this
 
 function App() {
-    const { tg } = useTelegram(); 
+    const { tg } = useTelegram();
 
     useEffect(() => {
         tg.ready();
     }, [tg]);
-  
+
     return (
         <div className="App">
             <Header />
             <Routes>
-                <Route index element={<ProductList />}/>
-                <Route path={'form'} element={<Form />}/>
+                <Route path="/" element={<MainPage />} /> {/* Main page */}
+                <Route path="/products" element={<ProductList />} />
             </Routes>
-            {/* <Form /> */}
         </div>
     );
 }
