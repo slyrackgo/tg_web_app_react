@@ -1,44 +1,29 @@
-.product {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--tg-theme-button-color);
-    padding: 15px;
-    width: 170px;
-}
-
-
-.img {
-    width: 100%;
-    background: lightgray;
-    height: 100px;
-    margin: 0 auto;
-    background: var(--tg-theme-button-color);
-}
 .quantity-controls {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin-top: 10px;
-    gap: 10px;
+    gap: 8px;
 }
 
 .quantity-btn {
-    background-color: #2a9d8f;
-    color: white;
+    padding: 4px 10px;
+    font-size: 16px;
     border: none;
-    padding: 6px 12px;
-    font-size: 18px;
+    background-color: #007bff;
+    color: white;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease-in-out;
 }
 
-/* .quantity-btn:hover {
-    background-color: #21867a;
-} */
+.quantity-btn:hover {
+    background-color: #0056b3;
+}
 
-.quantity {
+.quantity-count {
     font-size: 16px;
     min-width: 20px;
     text-align: center;
+    color: white;
 }

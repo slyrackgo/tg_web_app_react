@@ -23,10 +23,11 @@ const ProductItem = ({ product, className, onAdd, onRemove, quantity = 0 }) => {
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
             <div className="quantity-controls">
-                <button className="quantity-btn" onClick={handleRemove}>-</button>
-                <span className="quantity">{quantity}</span>
-                <button className="quantity-btn" onClick={handleAdd}>+</button>
+                <button className="quantity-btn" onClick={onRemoveHandler}>-</button>
+                <div className="quantity-count">{quantity}</div>
+                <button className="quantity-btn" onClick={onAddHandler}>+</button>
             </div>
+
         </div>
     );
 };
