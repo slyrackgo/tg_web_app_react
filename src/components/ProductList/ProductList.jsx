@@ -5,11 +5,19 @@ import { useTelegram } from '../../hooks/useTelegram';
 import {useCallback, useEffect} from "react";
 
 
+import pantsImg from '../../img/pants.png';
+import shirtImg from '../../img/shirt.png';
+import cardiganImg from '../../img/cardigan.png';
+import shoesImg from '../../img/shoes.png';
+
+
+
+
 const products = [
-    {id: '1', title: 'Брюки', price: 3600, description: 'Шикарные брюки в итальянском стиле'},
-    {id: '2', title: 'Батники', price: 2000, description: 'Классический аккуратный батник идущий в стиле old money, его стильный воротник добавляет образу серьезности и элегантности.'},
-    {id: '3', title: 'Кардиганы', price: 3900, description: ' Очень теплый и мягкий, отлично подойдет на все случаи жизни, производство идёт Турция'},
-    {id: '4', title: 'Обувь', price: 8200, description: 'Лоферы в красивом, богатом оттенке'},
+    {id: '1', title: 'Брюки', price: 3600, description: 'Шикарные брюки в итальянском стиле', image: pantsImg},
+    {id: '2', title: 'Батники', price: 2000, description: 'Классический аккуратный батник идущий в стиле old money, его стильный воротник добавляет образу серьезности и элегантности.', image: shirtImg},
+    {id: '3', title: 'Кардиганы', price: 3900, description: ' Очень теплый и мягкий, отлично подойдет на все случаи жизни, производство идёт Турция', image: cardiganImg},
+    {id: '4', title: 'Обувь', price: 8200, description: 'Лоферы в красивом, богатом оттенке', image: shoesImg},
 ]
 
 const getTotalPrice = (items = []) => {
