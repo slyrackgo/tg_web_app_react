@@ -1,12 +1,12 @@
 import React from 'react';
 import './ProductItem.css';
 
-const ProductItem = ({ product, className, onAdd, onRemove, quantity = 0 }) => {
-    const handleAdd = () => {
+const ProductItem = ({ product, className, onAdd, onRemove, quantity }) => {
+    const onAddHandler = () => {
         onAdd(product);
     };
 
-    const handleRemove = () => {
+    const onRemoveHandler = () => {
         onRemove(product);
     };
 
@@ -17,9 +17,9 @@ const ProductItem = ({ product, className, onAdd, onRemove, quantity = 0 }) => {
                 alt={product.title}
                 className="product-img"
             />
-            <div className={'title'}>{product.title}</div>
-            <div className={'description'}>{product.description}</div>
-            <div className={'price'}>
+            <div className="title">{product.title}</div>
+            <div className="description">{product.description}</div>
+            <div className="price">
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
             <div className="quantity-controls">
@@ -27,7 +27,6 @@ const ProductItem = ({ product, className, onAdd, onRemove, quantity = 0 }) => {
                 <div className="quantity-count">{quantity}</div>
                 <button className="quantity-btn" onClick={onAddHandler}>+</button>
             </div>
-
         </div>
     );
 };
