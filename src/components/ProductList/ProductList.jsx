@@ -2,40 +2,45 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './ProductList.css';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import pantsImg from '../../img/pants.png';
 import shirtImg from '../../img/shirt.png';
 import cardiganImg from '../../img/cardigan.png';
 import shoesImg from '../../img/shoes.png';
 
-const products = [
+const allProducts = [
     {
         id: '1',
         title: 'Брюки',
         price: 3600,
         description: 'Шикарные брюки в итальянском стиле',
-        image: pantsImg
+        image: pantsImg,
+        category: 'pants'
     },
     {
         id: '2',
         title: 'Батники',
         price: 2000,
         description: 'Классический аккуратный батник идущий в стиле old money, его стильный воротник добавляет образу серьезности и элегантности.',
-        image: shirtImg
+        image: shirtImg,
+        category: 'shirts'
     },
     {
         id: '3',
         title: 'Кардиганы',
         price: 3900,
         description: 'Очень теплый и мягкий, отлично подойдет на все случаи жизни, производство идёт Турция',
-        image: cardiganImg
+        image: cardiganImg,
+        category: 'cardigans'
     },
     {
         id: '4',
         title: 'Обувь',
         price: 8200,
         description: 'Лоферы в красивом, богатом оттенке',
-        image: shoesImg
+        image: shoesImg,
+        category: 'shoes'
     }
 ];
 
@@ -46,6 +51,10 @@ const getTotalPrice = (items = []) => {
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([]);
     const { tg, queryId } = useTelegram();
+    const { categoryId } = useParams();
+    const navigate = useNavigate();
+
+    const filteredProducts = allProducts.filter(p => p.category === categoryId);
 
     const onSendData = useCallback(() => {
         const data = {
@@ -75,7 +84,7 @@ const ProductList = () => {
 
         tg.MainButton.show();
         tg.MainButton.setParams({
-            text: `Купить ${getTotalPrice(newItems)}`
+            text: `Купить ${getTotalPrice(newItems)} сом`
         });
     };
 
@@ -89,9 +98,8 @@ const ProductList = () => {
             if (newItems.length === 0) {
                 tg.MainButton.hide();
             } else {
-                tg.MainButton.show();
                 tg.MainButton.setParams({
-                    text: `Купить ${getTotalPrice(newItems)}`
+                    text: `Купить ${getTotalPrice(newItems)} сом`
                 });
             }
         }
@@ -102,15 +110,16 @@ const ProductList = () => {
     };
 
     return (
-        <div className={'list'}>
-            {products.map(item => (
+        <div className="list">
+            <button className="back-btn" onClick={() => navigate(-1)}>← Назад</button>
+            {filteredProducts.map(item => (
                 <ProductItem
                     key={item.id}
                     product={item}
                     onAdd={onAdd}
                     onRemove={onRemove}
                     quantity={getQuantity(item.id)}
-                    className={'item'}
+                    className="item"
                 />
             ))}
         </div>

@@ -7,6 +7,9 @@ import Header from "./components/Header/Header";
 import ProductList from "./components/ProductList/ProductList";
 import MainPage from "./components/MainPage/MainPage"; // 👈 Add this
 
+import CategoriesPage from "./components/CategoriesPage/CategoriesPage";
+
+
 function App() {
     const { tg } = useTelegram();
 
@@ -18,9 +21,10 @@ function App() {
         <div className="App">
             <Header />
             <Routes>
-                <Route path="/" element={<MainPage />} /> {/* Main page */}
-                <Route path="/products" element={<ProductList />} />
-            </Routes>
+    <Route path="/" element={<MainPage />} />
+    <Route path="/categories" element={<CategoriesPage />} />
+    <Route path="/products/:categoryId" element={<ProductList />} />
+</Routes>
         </div>
     );
 }

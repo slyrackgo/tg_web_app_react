@@ -7,7 +7,7 @@ const MainPage = () => {
     const navigate = useNavigate();
 
     const handleStart = () => {
-        navigate('/products');
+       navigate('/categories');
     };
 
     return (
@@ -15,6 +15,7 @@ const MainPage = () => {
             <img src={logo} alt="Store Logo" className="store-logo" />
             <h1 className="store-title">Магазин мужской одежды</h1>
             <p className="store-description">Доставка по всему КР</p>
+            <p className="store-description">Шевченко 80.I-MALL 1-этаж, бутик A-26</p>
             <button className="start-button" onClick={handleStart}>
                 Перейти в каталог
             </button>
