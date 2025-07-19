@@ -1,10 +1,13 @@
 import React from 'react';
-import Button from "../Button/Button";
 import './ProductItem.css';
 
-const ProductItem = ({ product, className, onAdd }) => {
-    const onAddHandler = () => {
+const ProductItem = ({ product, className, onAdd, onRemove, quantity = 0 }) => {
+    const handleAdd = () => {
         onAdd(product);
+    };
+
+    const handleRemove = () => {
+        onRemove(product);
     };
 
     return (
@@ -19,9 +22,11 @@ const ProductItem = ({ product, className, onAdd }) => {
             <div className={'price'}>
                 <span>Стоимость: <b>{product.price}</b></span>
             </div>
-            <Button className={'add-btn'} onClick={onAddHandler}>
-                Добавить в корзину
-            </Button>
+            <div className="quantity-controls">
+                <button className="quantity-btn" onClick={handleRemove}>-</button>
+                <span className="quantity">{quantity}</span>
+                <button className="quantity-btn" onClick={handleAdd}>+</button>
+            </div>
         </div>
     );
 };
