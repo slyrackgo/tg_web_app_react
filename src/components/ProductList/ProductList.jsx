@@ -39,7 +39,6 @@ const products = [
     }
 ];
 
-// 🧠 Helper to calculate total
 const getTotalPrice = (itemsMap) => {
     return Object.values(itemsMap).reduce((acc, item) => {
         return acc + item.product.price * item.quantity;
@@ -49,6 +48,7 @@ const getTotalPrice = (itemsMap) => {
 const ProductList = () => {
     const [cartItems, setCartItems] = useState({});
     const { tg, queryId } = useTelegram();
+    const navigate = useNavigate(); // 👈 to navigate back
 
     const onSendData = useCallback(() => {
         const itemsArray = Object.values(cartItems).map(item => ({
@@ -123,7 +123,13 @@ const ProductList = () => {
 
     return (
         <div className={'list'}>
-             <button className="back-btn" onClick={() => navigate(-1)}>← Назад</button>
+            <button
+                onClick={() => navigate(-1)}
+                className="back-button"
+            >
+                ← Назад
+            </button>
+
             {products.map(item => (
                 <ProductItem
                     key={item.id}
