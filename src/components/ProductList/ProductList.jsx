@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './ProductList.css';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
+import { useNavigate } from 'react-router-dom';
 
 import pantsImg from '../../img/batnik1.png';
 import shirtImg from '../../img/batnik2.png';
