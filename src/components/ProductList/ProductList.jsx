@@ -3,10 +3,10 @@ import './ProductList.css';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
 
-import pantsImg from '../../img/pants.png';
-import shirtImg from '../../img/shirt.png';
-import cardiganImg from '../../img/cardigan.png';
-import shoesImg from '../../img/shoes.png';
+import pantsImg from '../../img/batnik1.png';
+import shirtImg from '../../img/batnik2.png';
+import cardiganImg from '../../img/batnik3.png';
+import shoesImg from '../../img/batnik4.png';
 
 const products = [
     {
