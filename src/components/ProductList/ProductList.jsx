@@ -123,6 +123,7 @@ const ProductList = () => {
 
     return (
         <div className={'list'}>
+             <button className="back-btn" onClick={() => navigate(-1)}>← Назад</button>
             {products.map(item => (
                 <ProductItem
                     key={item.id}
