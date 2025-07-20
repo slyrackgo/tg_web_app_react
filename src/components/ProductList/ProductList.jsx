@@ -2,66 +2,66 @@ import React, { useState, useCallback, useEffect } from 'react';
 import './ProductList.css';
 import ProductItem from '../ProductItem/ProductItem';
 import { useTelegram } from '../../hooks/useTelegram';
-import { useParams, useNavigate } from 'react-router-dom';
 
 import pantsImg from '../../img/pants.png';
 import shirtImg from '../../img/shirt.png';
 import cardiganImg from '../../img/cardigan.png';
 import shoesImg from '../../img/shoes.png';
 
-const allProducts = [
+const products = [
     {
         id: '1',
         title: 'Брюки',
         price: 3600,
         description: 'Шикарные брюки в итальянском стиле',
-        image: pantsImg,
-        category: 'pants'
+        image: pantsImg
     },
     {
         id: '2',
         title: 'Батники',
         price: 2000,
         description: 'Классический аккуратный батник идущий в стиле old money, его стильный воротник добавляет образу серьезности и элегантности.',
-        image: shirtImg,
-        category: 'shirts'
+        image: shirtImg
     },
     {
         id: '3',
         title: 'Кардиганы',
         price: 3900,
         description: 'Очень теплый и мягкий, отлично подойдет на все случаи жизни, производство идёт Турция',
-        image: cardiganImg,
-        category: 'cardigans'
+        image: cardiganImg
     },
     {
         id: '4',
         title: 'Обувь',
         price: 8200,
         description: 'Лоферы в красивом, богатом оттенке',
-        image: shoesImg,
-        category: 'shoes'
+        image: shoesImg
     }
 ];
 
-const getTotalPrice = (items = []) => {
-    return items.reduce((acc, item) => acc + item.price, 0);
+// 🧠 Helper to calculate total
+const getTotalPrice = (itemsMap) => {
+    return Object.values(itemsMap).reduce((acc, item) => {
+        return acc + item.product.price * item.quantity;
+    }, 0);
 };
 
 const ProductList = () => {
-    const [addedItems, setAddedItems] = useState([]);
+    const [cartItems, setCartItems] = useState({});
     const { tg, queryId } = useTelegram();
-    const { categoryId } = useParams();
-    const navigate = useNavigate();
-
-    const filteredProducts = allProducts.filter(p => p.category === categoryId);
 
     const onSendData = useCallback(() => {
+        const itemsArray = Object.values(cartItems).map(item => ({
+            ...item.product,
+            quantity: item.quantity
+        }));
+
         const data = {
-            products: addedItems,
-            totalPrice: getTotalPrice(addedItems),
+            products: itemsArray,
+            totalPrice: getTotalPrice(cartItems),
             queryId,
         };
+
         fetch('http://85.119.146.179:8000/web-data', {
             method: 'POST',
             headers: {
@@ -69,7 +69,7 @@ const ProductList = () => {
             },
             body: JSON.stringify(data)
         });
-    }, [addedItems, queryId]);
+    }, [cartItems, queryId]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData);
@@ -78,48 +78,59 @@ const ProductList = () => {
         };
     }, [onSendData, tg]);
 
-    const onAdd = (product) => {
-        const newItems = [...addedItems, product];
-        setAddedItems(newItems);
+    const updateMainButton = (items) => {
+        const total = getTotalPrice(items);
+        if (total === 0) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+            tg.MainButton.setParams({
+                text: `Купить на ${total} сом`
+            });
+        }
+    };
 
-        tg.MainButton.show();
-        tg.MainButton.setParams({
-            text: `Купить ${getTotalPrice(newItems)} сом`
+    const onAdd = (product) => {
+        setCartItems(prev => {
+            const newItems = { ...prev };
+            if (newItems[product.id]) {
+                newItems[product.id].quantity += 1;
+            } else {
+                newItems[product.id] = { product, quantity: 1 };
+            }
+            updateMainButton(newItems);
+            return newItems;
         });
     };
 
     const onRemove = (product) => {
-        const index = addedItems.findIndex(item => item.id === product.id);
-        if (index !== -1) {
-            const newItems = [...addedItems];
-            newItems.splice(index, 1);
-            setAddedItems(newItems);
-
-            if (newItems.length === 0) {
-                tg.MainButton.hide();
-            } else {
-                tg.MainButton.setParams({
-                    text: `Купить ${getTotalPrice(newItems)} сом`
-                });
+        setCartItems(prev => {
+            const newItems = { ...prev };
+            if (newItems[product.id]) {
+                newItems[product.id].quantity -= 1;
+                if (newItems[product.id].quantity <= 0) {
+                    delete newItems[product.id];
+                }
             }
-        }
+            updateMainButton(newItems);
+            return newItems;
+        });
     };
 
     const getQuantity = (productId) => {
-        return addedItems.filter(item => item.id === productId).length;
+        return cartItems[productId]?.quantity || 0;
     };
 
     return (
-        <div className="list">
-            <button className="back-btn" onClick={() => navigate(-1)}>← Назад</button>
-            {filteredProducts.map(item => (
+        <div className={'list'}>
+            {products.map(item => (
                 <ProductItem
                     key={item.id}
                     product={item}
                     onAdd={onAdd}
                     onRemove={onRemove}
                     quantity={getQuantity(item.id)}
-                    className="item"
+                    className={'item'}
                 />
             ))}
         </div>
